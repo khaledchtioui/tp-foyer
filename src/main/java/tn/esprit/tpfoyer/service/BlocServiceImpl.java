@@ -32,6 +32,7 @@ public class BlocServiceImpl  implements IBlocService {
 
         return listB;
     }
+//
 
     // Exemple sans Keywords :
     @Transactional
