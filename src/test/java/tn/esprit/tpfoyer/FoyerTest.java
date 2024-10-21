@@ -1,7 +1,9 @@
-package tn.esprit.tpfoyer.entity;
+package tn.esprit.tpfoyer;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import tn.esprit.tpfoyer.entity.Foyer;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FoyerTest {
 
