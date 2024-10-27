@@ -12,7 +12,7 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  app-timesheet:
+  app-tpfoyer:
     depends_on:
       - mysqldb
     image: echawechmortadha599/tp-foyer:1.0.0
