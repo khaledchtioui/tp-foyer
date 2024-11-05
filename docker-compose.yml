@@ -15,7 +15,7 @@ services:
   app-achat:
     depends_on:
       - mysqldb
-    image: khaledchtioui305/tp-foyer:1.0
+    image: khaledchtioui305/tp-foyer:latest
     restart: on-failure
     ports:
       - 8082:8082
