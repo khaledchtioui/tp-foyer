@@ -43,12 +43,14 @@ public class ReservationTest {
         reservation.setIdReservation(idReservation);
         reservation.setAnneeUniversitaire(anneeUniversitaire);
         reservation.setEstValide(estValide);
-        reservation.setEtudiants(etudiants);
+        reservation.setEtudiants(etudiants
+        // Assert
 
-        //// Assert
         assertEquals(idReservation, reservation.getIdReservation());
         assertEquals(anneeUniversitaire, reservation.getAnneeUniversitaire());
         assertEquals(estValide, reservation.isEstValide());
         assertEquals(etudiants, reservation.getEtudiants());
     }
+
+
 }
