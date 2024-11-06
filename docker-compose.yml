@@ -15,7 +15,7 @@ services:
   app-achat:
     depends_on:
       - mysqldb
-    image: khaledchtioui305/tp-foyer:${VERSION}  # Utilisation de la version dynamique
+    image: brahmieya/devops:${VERSION}  # Utilisation de la version dynamique
     restart: on-failure
     ports:
       - 8082:8082
