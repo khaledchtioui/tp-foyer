@@ -51,7 +51,7 @@ public class ReservationRestController {
 
 
 
-    // http://localhost:8089/tpfoyer/reservation/add-reservation
+    // http://192.168.33.10:8082/tpfoyer/reservation/add-reservation
     @PostMapping("/add-reservation")
     public Reservation addReservation(@RequestBody Reservation r) {
         Reservation reservation = reservationService.addReservation(r);
