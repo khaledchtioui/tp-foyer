@@ -18,7 +18,7 @@ services:
     image: brahmieya/devops:1.0
     restart: on-failure
     ports:
-      - 8082:8082
+      - 8084:8082
     environment:
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.url": "jdbc:mysql://mysqldb:3306/db?createDatabaseIfNotExist=true",
