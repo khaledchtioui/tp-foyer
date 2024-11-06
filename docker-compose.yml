@@ -15,7 +15,7 @@ services:
   app-achat:
     depends_on:
       - mysqldb
-    image: brahmieya/devops:1.0
+    image: khaledchtioui305/tp-foyer:1.0
     restart: on-failure
     ports:
       - 8084:8084
