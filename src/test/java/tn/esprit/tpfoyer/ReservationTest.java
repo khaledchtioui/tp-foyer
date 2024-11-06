@@ -45,7 +45,7 @@ public class ReservationTest {
         reservation.setEstValide(estValide);
         reservation.setEtudiants(etudiants);
 
-        // Assert
+        //// Assert
         assertEquals(idReservation, reservation.getIdReservation());
         assertEquals(anneeUniversitaire, reservation.getAnneeUniversitaire());
         assertEquals(estValide, reservation.isEstValide());
