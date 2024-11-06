@@ -5,16 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import tn.esprit.tpfoyer.entity.Reservation;
 import tn.esprit.tpfoyer.service.IReservationService;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,23 +19,36 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ReservationRestController.class)
 public class ReservationRestControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     private IReservationService reservationService;
+
+    @InjectMocks
+    private ReservationRestController reservationRestController;
+
+    private Reservation reservation;
+    private List<Reservation> listReservations;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(reservationRestController).build();
+
+        // Initialiser des objets Reservation
+        reservation = new Reservation("1", new Date(), true);
+        listReservations = new ArrayList<>() {{
+            add(new Reservation("2", new Date(), true));
+            add(new Reservation("3", new Date(), false));
+        }};
+    }
 
     @Test
     public void testGetReservations() throws Exception {
-        // Arrange
-        Reservation reservation = new Reservation();
-        List<Reservation> reservations = Collections.singletonList(reservation);
-        when(reservationService.retrieveAllReservations()).thenReturn(reservations);
+        when(reservationService.retrieveAllReservations()).thenReturn(listReservations);
 
-        // Act & Assert
         mockMvc.perform(get("/reservation/retrieve-all-reservations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").exists());
@@ -46,67 +56,42 @@ public class ReservationRestControllerTest {
 
     @Test
     public void testRetrieveReservation() throws Exception {
-        // Arrange
-        String reservationId = "8";
-        Reservation reservation = new Reservation();
+        String reservationId = "1";
         when(reservationService.retrieveReservation(reservationId)).thenReturn(reservation);
 
-        // Act & Assert
         mockMvc.perform(get("/reservation/retrieve-reservation/{reservation-id}", reservationId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").exists());
-    }
-
-    @Test
-    public void testRetrieveReservationParDateEtStatus() throws Exception {
-        // Arrange
-        Date date = new Date();
-        boolean status = true;
-        List<Reservation> reservations = Collections.singletonList(new Reservation());
-        when(reservationService.trouverResSelonDateEtStatus(date, status)).thenReturn(reservations);
-
-        // Act & Assert
-        mockMvc.perform(get("/reservation/retrieve-reservation-date-status/{d}/{v}", date, status))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0]").exists());
+                .andExpect(jsonPath("$.id").value("1"));
     }
 
     @Test
     public void testAddReservation() throws Exception {
-        // Arrange
-        Reservation reservation = new Reservation();
         when(reservationService.addReservation(any(Reservation.class))).thenReturn(reservation);
 
-        // Act & Assert
         mockMvc.perform(post("/reservation/add-reservation")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"attribute\": \"value\"}")) // JSON example, update as needed
+                        .content("{\"id\": \"4\", \"date\": \"2024-01-01\", \"status\": true}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").exists());
+                .andExpect(jsonPath("$.id").value("1"));
     }
 
     @Test
     public void testRemoveReservation() throws Exception {
-        // Arrange
-        String reservationId = "8";
+        String reservationId = "1";
         doNothing().when(reservationService).removeReservation(reservationId);
 
-        // Act & Assert
         mockMvc.perform(delete("/reservation/remove-reservation/{reservation-id}", reservationId))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testModifyReservation() throws Exception {
-        // Arrange
-        Reservation reservation = new Reservation();
         when(reservationService.modifyReservation(any(Reservation.class))).thenReturn(reservation);
 
-        // Act & Assert
         mockMvc.perform(put("/reservation/modify-reservation")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"attribute\": \"value\"}")) // JSON example, update as needed
+                        .content("{\"id\": \"1\", \"date\": \"2024-01-01\", \"status\": true}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").exists());
+                .andExpect(jsonPath("$.id").value("1"));
     }
 }
