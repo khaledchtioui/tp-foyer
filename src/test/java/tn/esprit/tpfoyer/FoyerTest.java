@@ -9,6 +9,7 @@ public class FoyerTest {
 
     @Test
     public void testFoyerConstructorAndGetters() {
+        
         // Arrange
         Long idFoyer = 1L;
         String nomFoyer = "Foyer A";
