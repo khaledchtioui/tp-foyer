@@ -10,6 +10,7 @@ WORKDIR /app
 COPY target/tp-foyer-${VERSION}.jar /app/tp-foyer.jar
 
 # Exposer le port sur lequel l'application écoute
+
 EXPOSE 8082
 
 
